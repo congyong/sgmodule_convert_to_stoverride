@@ -135,7 +135,7 @@ def generate_stoverride(sg_info):
       'match': script['pattern'],
       'name': script['name'],
       'type': script['type'].replace('http-', ''),
-      'require-body': True if script['requires-body'] == '1' else False,
+      'require-body': True if script.get('requires-body','0') == '1' else False,
       'max_size':  script.get('max_size', '0'),
       'binary-mode': True if script.get('binary-mode', '0') == '1' else False
     }
