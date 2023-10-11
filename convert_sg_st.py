@@ -137,6 +137,7 @@ def generate_stoverride(sg_info):
       'type': script['type'].replace('http-', ''),
       'require-body': True if script.get('requires-body','0') == '1' else False,
       'max_size':  script.get('max_size', '0'),
+      'timeout':  script.get('timeout', '5'),
       'binary-mode': True if script.get('binary-mode', '0') == '1' else False
     }
     stoverride['script'].append(item)
@@ -189,7 +190,7 @@ def format_stoverride(stoverride):
      content += f'     require-body: {script["require-body"]}\n'
      content += f'     binary-mode: {script["binary-mode"]}\n'
      content += f'     max_size: {script["max_size"]}\n'
-     content += f'     timeout: 10\n'
+     content += f'     timeout: {script["timeout"]}\n'
 
   # 格式化rewrite规则
   if stoverride.get('rewrite'):
