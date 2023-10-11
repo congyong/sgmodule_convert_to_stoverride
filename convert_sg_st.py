@@ -18,7 +18,7 @@ def parse_sgmodule(content):
       key, value = line[2:].split('=', 1)
       headers[key.strip()] = value.strip()
   #解析 rules
-  common_pattern_tail= r'(.*?)((?=\[\s*[\w\s-]+\s*\])|$)'
+  common_pattern_tail= r'(.*?)(?=\n\s*\[\w[\w\s-]+\]\s*|$)'
   pattern = r'\[Rule\]'+common_pattern_tail
   matches = re.search(pattern, content, re.DOTALL)
   if matches:
@@ -125,9 +125,9 @@ def generate_stoverride(sg_info):
 
   # 处理规则
   for rule in sg_info['rewrite_rules']:
-
-    pattern = rule.replace('_ reject', '- reject')
-    stoverride['rewrite'].append(pattern)
+    if rule.strip():
+        pattern = rule.replace('_ reject', '- reject')
+        stoverride['rewrite'].append(pattern)
 
   # 处理脚本
   for script in sg_info['scripts']:
@@ -237,4 +237,3 @@ if __name__ == '__main__':
     else:
         input_file = sys.argv[1]
         sgmodule_to_stoverride(input_file)
-
