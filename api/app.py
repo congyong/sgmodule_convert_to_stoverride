@@ -1,5 +1,7 @@
 from flask import Flask, request, send_file, make_response
 import subprocess
+import tempfile
+import shutil 
 import os
 
 app = Flask(__name__)
@@ -24,8 +26,11 @@ def convert():
 
     if sgmodule_content:
         # 将 SGModule 内容写入临时文件
-        with open('input.sgmodule', 'w', encoding='utf-8') as f:
+        with tempfile.NamedTemporaryFile(mode='w', delete=False,encoding='utf-8') as f:
             f.write(sgmodule_content)
+            f.close()
+            shutil.copy(f.name,'input.sgmodule')
+            
 
         # 调用 convert_sg_st.py 并传递文件路径
         result = subprocess.run(['python3', 'convert_sg_st.py', 'input.sgmodule'])
@@ -42,8 +47,9 @@ def convert():
             response.headers["Content-Type"] = "text/plain"
 
             # 删除临时文件
+            os.remove(f.name)
             os.remove('input.sgmodule')
-            os.remove('input.stoverride')
+           # os.remove('input.stoverride')
 
             return response
 
