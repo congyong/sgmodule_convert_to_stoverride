@@ -1,15 +1,17 @@
-
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "app.py",
-      "use": "@vercel/python"
-    }
-  ],
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/convert", "dest": "app.py" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/app.py"
+    },
+    {
+      "src": "/convert_sg_st.py",
+      "dest": "/convert_sg_st.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
   ]
 }
-
