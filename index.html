@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SGModule to STOverride Converter</title>
+</head>
+<body>
+    <h1>SGModule to STOverride Converter</h1>
+    
+    <form action="/convert" method="post" enctype="multipart/form-data">
+        <label for="file">Upload File:</label>
+        <input type="file" name="file" accept=".sgmodule"><br>
+
+        <label for="url">Or Enter File URL:</label>
+        <input type="text" name="url" placeholder="URL of the SGModule file"><br>
+
+        <input type="submit" value="Convert">
+    </form>
+
+    <hr>
+
+    <h2>Converted STOverride File:</h2>
+    <a id="downloadLink" style="display: none" download="xmly.stoverride">Download STOverride</a>
+
+    <div id="convertedContent"></div>
+
+    <script>
+        function handleResponse(response) {
+            var downloadLink = document.getElementById("downloadLink");
+            var convertedContent = document.getElementById("convertedContent");
+
+            if (response.ok) {
+                response.text().then(function(data) {
+                    convertedContent.innerText = data;
+                    downloadLink.href = "data:text/plain;charset=utf-8," + encodeURIComponent(data);
+                    downloadLink.style.display = "block";
+                });
+            } else {
+                convertedContent.innerText = "Error converting SGModule to STOverride.";
+            }
+        }
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            fetch("/convert", {
+                method: "POST",
+                body: formData,
+            })
+            .then(handleResponse);
+        });
+    </script>
+</body>
+</html>
