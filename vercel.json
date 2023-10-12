@@ -1,17 +1,18 @@
 {
-  "rewrites": [
+  "version": 2,
+  "routes": [
     {
-      "source": "/api/convert",
-      "destination": "/api/app"
+      "src": "/convert",
+      "dest": "/api/app.py",
+      "methods": ["POST"]
     },
     {
-      "source": "/api/(.*)",
-      "source": "/api/$1"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "source": "/(.*)",
-      "source": "/$1"
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
-
