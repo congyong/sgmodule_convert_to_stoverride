@@ -21,6 +21,6 @@
       "dest": "/index.html"
     }
   ]，
-  "env": {
-    "PYTHONPATH": "."}
-}
+  "env": [ 
+     {"PYTHONPATH": "."}
+  ]
