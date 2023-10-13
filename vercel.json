@@ -20,5 +20,7 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ]，
+  "env": {
+    "PYTHONPATH": "."}
 }
