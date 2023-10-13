@@ -3,8 +3,6 @@ import subprocess
 import tempfile
 import shutil 
 import os
-import sys 
-sys.path.append('../api/')
 import convert_sg_st
 
 app = Flask(__name__)
