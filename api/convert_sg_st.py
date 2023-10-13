@@ -135,9 +135,8 @@ def generate_stoverride(sg_info):
       'match': script['pattern'],
       'name': script['name'],
       'type': script['type'].replace('http-', ''),
-      'require-body': True if script.get('requires-body','0') == '1' else False,
+      'require-body': True if script['requires-body'] == '1' else False,
       'max_size':  script.get('max_size', '0'),
-      'timeout':  script.get('timeout', '5'),
       'binary-mode': True if script.get('binary-mode', '0') == '1' else False
     }
     stoverride['script'].append(item)
@@ -190,7 +189,7 @@ def format_stoverride(stoverride):
      content += f'     require-body: {script["require-body"]}\n'
      content += f'     binary-mode: {script["binary-mode"]}\n'
      content += f'     max_size: {script["max_size"]}\n'
-     content += f'     timeout: {script["timeout"]}\n'
+     content += f'     timeout: 10\n'
 
   # 格式化rewrite规则
   if stoverride.get('rewrite'):
@@ -209,7 +208,7 @@ def format_stoverride(stoverride):
 
   return content
 
-def sgmodule_to_stoverride(sgmodule_file, stoverride_file=None):
+def sgmodule_to_stoverride(sgmodule_file, stoverride_file=None,output_file=True):
   
   # 读取sgmodule文件
   with codecs.open(sgmodule_file, 'r', encoding='utf-8') as f:
@@ -226,10 +225,13 @@ def sgmodule_to_stoverride(sgmodule_file, stoverride_file=None):
     stoverride_file = sgmodule_file.replace('.sgmodule', '.stoverride')
   
   stoverride_content = format_stoverride(stoverride)
-  with codecs.open(stoverride_file, 'w', encoding='utf-8') as f:
-    f.write(stoverride_content)
-
-  print(f'SGModule converted to STOverride: {stoverride_file}')
+  if not output_file:
+     print(f'Return the result of : SGModule converted to STOverride')
+     return stoverride_content
+  else:   
+    with codecs.open(stoverride_file, 'w', encoding='utf-8') as f:
+        f.write(stoverride_content)
+    print(f'SGModule converted to STOverride: {stoverride_file}')
 
 
 if __name__ == '__main__':
