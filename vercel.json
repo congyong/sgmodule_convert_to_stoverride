@@ -3,7 +3,7 @@
   "version": 2,
   "build": {
         "env": {
-        "PYTHONPATH": "."
+        "PYTHONPATH": "api/"
         }
     },
   "builds": [
