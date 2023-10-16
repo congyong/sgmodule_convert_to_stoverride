@@ -30,9 +30,7 @@
 
             if (response.ok) {
                 response.text().then(function(data) {
-                    var textContent = data;
-                    var fixtextContent = textContent.replace(/ /g,'&nbsp;');
-                    convertedContent.innerText = fixtextContent;
+                    convertedContent.innerText = data;
                     downloadLink.href = "data:text/plain;charset=utf-8," + encodeURIComponent(data);
                     downloadLink.style.display = "block";
                 });
