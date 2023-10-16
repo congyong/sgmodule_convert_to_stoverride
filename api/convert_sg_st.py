@@ -167,7 +167,7 @@ def format_stoverride(stoverride):
     for rule in stoverride['rules']:
      content += f'\n  {rule}'
   # 格式化mitm
-  content += 'http:\n'
+  content += '\nhttp:\n'
   if stoverride.get('mitm'):
     content += '  mitm:\n'
     for host in stoverride['mitm']:
